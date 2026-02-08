@@ -16,13 +16,7 @@ A web-based frontend scheduling dashboard designed for Ayurvedic hospitals and P
 - JavaScript
 
 
-## 📸 Screenshots
 
-### Login Page
-![Login Page](./sin%209.jpg)
-
-### Dashboard
-![Dashboard](./sih%20img1.jpg)
 
 
 
