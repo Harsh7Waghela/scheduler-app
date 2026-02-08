@@ -18,11 +18,14 @@ A web-based frontend scheduling dashboard designed for Ayurvedic hospitals and P
 
 ## 📸 Screenshots
 
-###  Login Page
-![Login (security)](screenshots/loginpage.png)
+### Login Page
+![Login Page](screenshots/login.png)
 
-###  Dashboard
-![Overview](screenshots/dashboard.png)
+### Dashboard
+![Dashboard](screenshots/dashboard.png)
+
+### Schedule Appointment
+![Schedule Appointment](screenshots/appointment.png)
 
 ###  Schedule Appointment
 ![Patient details](screenshots/appointment.png)
