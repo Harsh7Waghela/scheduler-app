@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AyurSutra - Panchakarma Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+      
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1b5e20 200%, #4caf50 100%);
+            min-height: 100vh;
+            color: #333;
+            background-image: url(sih\ 9.jpg);
+            background-size: cover;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .doctor-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .doctor-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            color: #4a5568;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            color: white;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: scale(1.05);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .appointment-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .appointment-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 12px;
+            transition: transform 0.2s ease;
+            cursor: pointer;
+        }
+
+        .appointment-item:hover {
+            transform: translateX(5px);
+        }
+
+        .patient-info h4 {
+            color: #2d3748;
+            margin-bottom: 0.25rem;
+        }
+
+        .therapy-type {
+            color: #4a5568;
+            font-size: 0.9rem;
+        }
+
+        .appointment-time {
+            text-align: right;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status.upcoming {
+            background: #bee3f8;
+            color: #2b6cb0;
+        }
+
+        .status.completed {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .status.cancelled {
+            background: #fed7d7;
+            color: #c53030;
+        }
+
+        .form-section {
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffa8a8 100%);
+        }
+
+        .therapy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .therapy-card {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .therapy-card:hover {
+            transform: scale(1.05);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .close {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        <style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #f0fdf4 0%, #d1fae5 100%);
+        min-height: 100vh;
+        color: #1e293b;
+    }
+
+    .header {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 1rem 2rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .logo {
+        font-size: 2rem;
+        font-weight: bold;
+        background: linear-gradient(45deg, #059669, #10b981);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .doctor-avatar {
+        background: linear-gradient(45deg, #14b8a6, #0ea5e9);
+    }
+
+    .card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .card-title {
+        font-size: 1.4rem;
+        font-weight: bold;
+        margin-bottom: 1.5rem;
+        color: #065f46;
+    }
+
+    .stat-item {
+        background: linear-gradient(135deg, #34d399, #10b981);
+        color: white;
+    }
+
+    .appointment-item {
+        background: linear-gradient(135deg, #a7f3d0 0%, #d1fae5 100%);
+    }
+
+    .therapy-card {
+        background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+    }
+
+    .therapy-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .btn {
+        background: linear-gradient(135deg, #10b981, #059669);
+    }
+
+    .btn-secondary {
+        background: linear-gradient(135deg, #3b82f6, #06b6d4);
+    }
+
+    .btn-danger {
+        background: linear-gradient(135deg, #ef4444, #f87171);
+    }
+
+    .status.upcoming {
+        background: #d1fae5;
+        color: #065f46;
+    }
+
+    .status.completed {
+        background: #bbf7d0;
+        color: #166534;
+    }
+
+    .status.cancelled {
+        background: #fee2e2;
+        color: #b91c1c;
+    }
+
+    textarea, input, select {
+        border: 2px solid #e2e8f0;
+    }
+
+    textarea:focus,
+    input:focus,
+    select:focus {
+        border-color: #10b981;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+    }
+
+
+
+        .quick-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body  >
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">🌿AyurSutra</div>
+            <div class="doctor-info">
+                <div>
+                    <div style="font-weight: bold; color: #4a5568;">Dr. Priya Sharma</div>
+                    <div style="font-size: 0.9rem; color: #718096;">Panchakarma Specialist</div>
+                </div>
+                <div class="doctor-avatar">PS</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Left Panel - Quick Stats & Actions -->
+        <div>
+            <div class="card">
+                <div class="card-title">📊 Today's Overview</div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalAppointments">8</span>
+                        <span class="stat-label">Total Appointments</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="completedTherapies">5</span>
+                        <span class="stat-label">Completed</span>
+                    </div>
+                </div>
+                
+                <div class="quick-actions">
+                    <button class="btn" onclick="openModal('appointmentModal')">+ New Appointment</button>
+                  
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 2rem;">
+                <div class="card-title">🌿 Panchakarma Therapies</div>
+                <div class="therapy-grid">
+                    <div class="therapy-card" onclick="filterByTherapy('vamana')">
+                        <div>Vamana</div>
+                        <div style="font-size: 0.8rem; opacity: 0.8;">Therapeutic Emesis</div>
+                    </div>
+                    <div class="therapy-card" onclick="filterByTherapy('virechana')">
+                        <div>Virechana</div>
+                        <div style="font-size: 0.8rem; opacity: 0.8;">Therapeutic Purgation</div>
+                    </div>
+                    <div class="therapy-card" onclick="filterByTherapy('basti')">
+                        <div>Basti</div>
+                        <div style="font-size: 0.8rem; opacity: 0.8;">Enema Therapy</div>
+                    </div>
+                    <div class="therapy-card" onclick="filterByTherapy('nasya')">
+                        <div>Nasya</div>
+                        <div style="font-size: 0.8rem; opacity: 0.8;">Nasal Therapy</div>
+                    </div>
+                      <div class="therapy-card" onclick="filterByTherapy('virechana')">
+                        <div>Raktamoksha</div>
+                        <div style="font-size: 0.8rem; opacity: 0.8;">Bloodletting Therapy</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Center Panel - Appointments List -->
+        <div>
+            <div class="card">
+                <div class="card-title">📅 Today's Appointments</div>
+                <div class="appointment-list" id="appointmentList">
+                    <!-- Appointments will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+
+        
+        <!-- Right Panel - Patient Details & Notes -->
+        <div>
+            <div class="card">
+                <div class="card-title">👤 Selected Patient</div>
+                <div id="patientDetails">
+                    <div style="text-align: center; color: #666; padding: 2rem;">
+                        Select an appointment to view patient details
+                    </div>
+                </div>
+            </div>
+
+
+
+            
+            <!-- Upcoming Appointments Section -->
+
+
+
+            <div class="card" style="margin-top: 2rem;">
+                <div class="card-title">📝 Quick Notes</div>
+                <textarea id="quickNotes" rows="8" placeholder="Add treatment notes, observations, or reminders..."></textarea>
+                <button class="btn" style="margin-top: 1rem; width: 100%;" onclick="saveNotes()">Save Notes</button>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- Upcoming Appointments Section -->
+
+<div class="card" style="margin-top: 2rem; background-color: rgb(188, 234, 234);">
+    <div class="card-title">⏭️ Next Scheduled Appointment</div>
+    <div id="nextAppointmentBox" style="padding:1rem; text-align:center; color:#555;">
+        Loading next appointment...
+    </div>
+</div>
+
+
+
+    <!-- New Appointment Modal -->
+    <div id="appointmentModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('appointmentModal')">&times;</span>
+            <h2 style="margin-bottom: 2rem; color: #4a5568;">Schedule New Appointment</h2>
+            
+            <div class="form-group">
+                <label>Patient Name</label>
+                <input type="text" id="patientName" placeholder="Enter patient name">
+            </div>
+            
+            <div class="form-group">
+                <label>Therapy Type</label>
+                <select id="therapyType">
+                    <option value="vamana">Vamana (Therapeutic Emesis)</option>
+                    <option value="virechana">Virechana (Therapeutic Purgation)</option>
+                    <option value="basti">Basti (Enema Therapy)</option>
+                    <option value="nasya">Nasya (Nasal Therapy)</option>
+                    <option value="raktamokshana">Raktamokshana (Bloodletting)</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Date & Time</label>
+                <input type="datetime-local" id="appointmentDateTime">
+            </div>
+            
+            <div class="form-group">
+                <label>Duration (minutes)</label>
+                <select id="duration">
+                    <option value="30">30 minutes</option>
+                    <option value="60">1 hour</option>
+                    <option value="90">1.5 hours</option>
+                    <option value="120">2 hours</option>
+                </select>
+            </div>
+
+
+              <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="newPatientName" placeholder="Enter full name">
+            </div>
+
+             <div class="form-group">
+                <label>Age</label>
+                <input type="number" id="patientAge" placeholder="Enter age">
+            </div>
+            
+            <div class="form-group">
+                <label>Contact Number</label>
+                <input type="tel" id="patientPhone" placeholder="Enter contact number">
+            </div>
+            
+            <div class="form-group">
+                <label>Constitution (Prakriti)</label>
+                <select id="patientPrakriti">
+                    <option value="vata">Vata</option>
+                    <option value="pitta">Pitta</option>
+                    <option value="kapha">Kapha</option>
+                    <option value="vata-pitta">Vata-Pitta</option>
+                    <option value="pitta-kapha">Pitta-Kapha</option>
+                    <option value="vata-kapha">Vata-Kapha</option>
+                    <option value="tridosha">Tridosha</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Medical History</label>
+                <textarea id="medicalHistory" rows="4" placeholder="Enter relevant medical history..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>Notes</label>
+                <textarea id="appointmentNotes" rows="3" placeholder="Add any special instructions or notes..."></textarea>
+            </div>            
+            
+            <div style="text-align: right; margin-top: 2rem;">
+                <button class="btn btn-danger" onclick="closeModal('appointmentModal')">Cancel</button>
+                <button class="btn" onclick="scheduleAppointment()" style="margin-left: 1rem;">Schedule Appointment</button>
+            </div>
+        </div>
+
+
+         
+
+    
+    <!-- New Patient Modal -->
+   
+    <script>
+
+function getNextAppointment() {
+    return appointments.find(app => app.status === 'upcoming');
+}
+
+function renderNextAppointment() {
+    const nextApp = getNextAppointment();
+    const box = document.getElementById('nextAppointmentBox');
+
+    if (nextApp) {
+        box.innerHTML = `
+            <strong>Next Patient:</strong> ${nextApp.patientName} <br>
+            <span style="color:#666;">${nextApp.therapyName} at ${nextApp.time}</span>
+        `;
+    } else {
+        box.innerHTML = "✅ No upcoming appointments!";
+    }
+}
+
+
+
+        // Sample data
+        let appointments = [
+            {
+                id: 1,
+                patientName: "Rajesh Kumar",
+                therapy: "vamana",
+                therapyName: "Vamana",
+                time: "09:00 AM",
+                duration: 90,
+                status: "completed",
+                age: 45,
+                phone: "+91 98765 43210",
+                prakriti: "Vata-Pitta",
+                notes: "First session of Panchakarma treatment. Patient reports chronic acidity and stress-related issues."
+            },
+            {
+                id: 2,
+                patientName: "Meera Patel",
+                therapy: "abhyanga",
+                therapyName: "Abhyanga",
+                time: "10:30 AM",
+                duration: 60,
+                status: "completed",
+                age: 38,
+                phone: "+91 87654 32109",
+                prakriti: "Kapha",
+                notes: "Regular maintenance therapy. Patient responding well to treatment."
+            },
+            {
+                id: 3,
+                patientName: "Arjun Sharma",
+                therapy: "basti",
+                therapyName: "Basti",
+                time: "11:30 AM",
+                duration: 120,
+                status: "upcoming",
+                age: 52,
+                phone: "+91 76543 21098",
+                prakriti: "Vata",
+                notes: "Third session in the series. Monitor for any digestive discomfort."
+            },
+            {
+                id: 4,
+                patientName: "Lakshmi Iyer",
+                therapy: "nasya",
+                therapyName: "Nasya",
+                time: "02:00 PM",
+                duration: 45,
+                status: "upcoming",
+                age: 42,
+                phone: "+91 65432 10987",
+                prakriti: "Pitta",
+                notes: "Treatment for chronic sinusitis. Second session in the treatment plan."
+            },
+            {
+                id: 5,
+                patientName: "Vikram Singh",
+                therapy: "virechana",
+                therapyName: "Virechana",
+                time: "03:30 PM",
+                duration: 90,
+                status: "upcoming",
+                age: 48,
+                phone: "+91 54321 09876",
+                prakriti: "Pitta-Kapha",
+                notes: "Pre-treatment preparation completed. Ready for main procedure."
+            }
+        ];
+
+// 🛠 Convert old sample data "time" into proper dateTime (today's date)
+appointments = appointments.map(app => {
+    if (!app.dateTime && app.time) {
+        const today = new Date();
+        const [time, modifier] = app.time.split(" ");
+        let [hours, minutes] = time.split(":");
+        hours = parseInt(hours);
+        minutes = parseInt(minutes);
+
+        if (modifier.toLowerCase() === "pm" && hours < 12) hours += 12;
+        if (modifier.toLowerCase() === "am" && hours === 12) hours = 0;
+
+        const dateObj = new Date(today.getFullYear(), today.getMonth(), today.getDate(), hours, minutes);
+        app.dateTime = dateObj.toISOString();
+    }
+    return app;
+});
+
+        
+        let patients = [];
+        let selectedPatient = null;
+
+        function renderAppointments() {
+            const appointmentList = document.getElementById('appointmentList');
+            appointmentList.innerHTML = '';
+            
+            appointments.forEach(appointment => {
+                const appointmentItem = document.createElement('div');
+                appointmentItem.className = 'appointment-item';
+                appointmentItem.onclick = () => selectPatient(appointment);
+                
+                // Get date from dateTime if available, otherwise use today's date
+                let appointmentDate;
+                if (appointment.dateTime) {
+                    appointmentDate = new Date(appointment.dateTime);
+                } else {
+                    appointmentDate = new Date(); // Default to today
+                }
+                
+                const dateString = appointmentDate.toLocaleDateString('en-US', { 
+                    weekday: 'short', 
+                    month: 'short', 
+                    day: 'numeric' 
+                });
+                
+                appointmentItem.innerHTML = `
+                    <div class="patient-info">
+                        <h4>${appointment.patientName}</h4>
+                        <div class="therapy-type">${appointment.therapyName} (${appointment.duration} min)</div>
+                        <div style="font-size: 0.85rem; color: #666; margin-top: 0.25rem;">📅 ${dateString}</div>
+                    </div>
+                    <div class="appointment-time">
+                        <div>${appointment.time}</div>
+                        <div class="status ${appointment.status}">${appointment.status}</div>
+                    </div>
+                `;
+                
+                appointmentList.appendChild(appointmentItem);
+            });
+        }
+
+        function selectPatient(appointment) {
+    const nextApp = getNextAppointment();
+
+    // Warning agar galat patient pe click kare
+    if (nextApp && appointment.id !== nextApp.id && appointment.status === 'upcoming') {
+        alert(`⚠️ Wrong patient selected!\nNext patient is: ${nextApp.patientName} (${nextApp.therapyName} at ${nextApp.time})`);
+    }
+    
+
+    selectedPatient = appointment;
+    const patientDetails = document.getElementById('patientDetails');
+    
+    patientDetails.innerHTML = `
+        <div style="margin-bottom: 1.5rem;">
+            <h3 style="color: #4a5568; margin-bottom: 0.5rem;">${appointment.patientName}</h3>
+            <div style="color: #666; margin-bottom: 1rem;">Age: ${appointment.age} | Constitution: ${appointment.prakriti}</div>
+            <div style="color: #666; margin-bottom: 1rem;">📞 ${appointment.phone}</div>
+            
+            <div style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); padding: 1rem; border-radius: 10px; margin: 1rem 0;">
+                <strong>Therapy:</strong> ${appointment.therapyName}<br>
+                <strong>Time:</strong> ${appointment.time}<br>
+                <strong>Duration:</strong> ${appointment.duration} minutes<br>
+                <strong>Status:</strong> <span class="status ${appointment.status}">${appointment.status}</span>
+            </div>
+            
+            <div style="margin-top: 1rem;">
+                <strong>Notes:</strong><br>
+                <div style="background: #f7fafc; padding: 1rem; border-radius: 8px; margin-top: 0.5rem; color: #4a5568;">
+                    ${appointment.notes}
+                </div>
+            </div>
+            
+            <div style="margin-top: 1.5rem;">
+                <button class="btn" onclick="markCompleted(${appointment.id})" style="margin-right: 0.5rem;">Mark Completed</button>
+                <button class="btn btn-danger" onclick="cancelAppointment(${appointment.id})">Cancel</button>
+            </div>
+        </div>
+    `;
+}
+
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+function scheduleAppointment() {
+    const patientName = document.getElementById('newPatientName').value.trim();
+    const therapyType = document.getElementById('therapyType').value;
+    const dateTime = document.getElementById('appointmentDateTime').value;
+    const duration = document.getElementById('duration').value;
+    const notes = document.getElementById('appointmentNotes').value;
+
+    const age = document.getElementById('patientAge').value;
+    const phone = document.getElementById('patientPhone').value;
+    const prakriti = document.getElementById('patientPrakriti').value;
+
+    if (!patientName || !dateTime) {
+        alert('⚠️ Please fill in all required fields!');
+        return;
+    }
+
+    const startTime = new Date(dateTime);
+    const endTime = new Date(startTime.getTime() + parseInt(duration) * 60000);
+
+    // 🚨 Conflict check (handle both dateTime + plain time string)
+    const hasConflict = appointments.some(app => {
+        if (app.status === "cancelled") return false;
+
+        if (app.dateTime) {
+            // normal case: use dateTime
+            const appStart = new Date(app.dateTime);
+            const appEnd = new Date(appStart.getTime() + (app.duration || 30) * 60000);
+            return (startTime < appEnd && endTime > appStart);
+        } else if (app.time) {
+            // fallback: compare only the time string (like "02:00 PM")
+            const existingTime = app.time.trim().toLowerCase();
+            const newTime = startTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }).toLowerCase();
+            return existingTime === newTime;
+        }
+
+        return false;
+    });
+
+    if (hasConflict) {
+        alert("🚨 This slot is already booked! Please choose another time.");
+        return; // stop scheduling
+    }
+
+    const therapyNames = {
+        vamana: 'Vamana',
+        virechana: 'Virechana',
+        basti: 'Basti',
+        nasya: 'Nasya',
+        raktamokshana: 'Raktamokshana'
+    };
+
+    const newAppointment = {
+        id: appointments.length + 1,
+        patientName,
+        therapy: therapyType,
+        therapyName: therapyNames[therapyType],
+        time: startTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }),
+        dateTime: startTime.toISOString(),
+        duration: parseInt(duration),
+        status: 'upcoming',
+        age: parseInt(age) || "Not given",
+        phone: phone || "Not given",
+        prakriti: prakriti || "To be assessed",
+        notes: notes || 'New appointment scheduled'
+    };
+
+    appointments.push(newAppointment);
+    renderAppointments();
+    renderNextAppointment();
+    updateStats();
+
+    // Clear form
+    document.getElementById('appointmentNotes').value = '';
+    document.getElementById('newPatientName').value = '';
+    document.getElementById('patientAge').value = '';
+    document.getElementById('patientPhone').value = '';
+    document.getElementById('medicalHistory').value = '';
+
+    alert('✅ Appointment scheduled successfully!');
+}
+
+
+
+        function addPatient() {
+            const name = document.getElementById('newPatientName').value;
+            const age = document.getElementById('patientAge').value;
+            const phone = document.getElementById('patientPhone').value;
+            const prakriti = document.getElementById('patientPrakriti').value;
+            const history = document.getElementById('medicalHistory').value;
+            
+            if (!name || !age || !phone) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            const newPatient = {
+                id: patients.length + 1,
+                name: name,
+                age: parseInt(age),
+                phone: phone,
+                prakriti: prakriti,
+                medicalHistory: history || 'No significant history recorded'
+            };
+            
+            patients.push(newPatient);
+            closeModal('patientModal');
+            
+            // Clear form
+            document.getElementById('newPatientName').value = '';
+            document.getElementById('patientAge').value = '';
+            document.getElementById('patientPhone').value = '';
+            document.getElementById('medicalHistory').value = '';
+            
+            alert('Patient added successfully!');
+        }
+
+        function markCompleted(appointmentId) {
+            const appointment = appointments.find(app => app.id === appointmentId);
+            if (appointment) {
+                appointment.status = 'completed';
+                renderAppointments();
+                updateStats();
+                if (selectedPatient && selectedPatient.id === appointmentId) {
+                    selectPatient(appointment);
+                }
+                alert('Appointment marked as completed!');
+            }
+        }
+
+        function cancelAppointment(appointmentId) {
+            if (confirm('Are you sure you want to cancel this appointment?')) {
+                const appointment = appointments.find(app => app.id === appointmentId);
+                if (appointment) {
+                    appointment.status = 'cancelled';
+                    renderAppointments();
+                    updateStats();
+                    if (selectedPatient && selectedPatient.id === appointmentId) {
+                        selectPatient(appointment);
+                    }
+                    alert('Appointment cancelled successfully!');
+                }
+            }
+        }
+
+        function filterByTherapy(therapyType) {
+            alert(`Filtering appointments for ${therapyType} therapy. This feature would show only appointments for the selected therapy type.`);
+        }
+
+        function saveNotes() {
+            const notes = document.getElementById('quickNotes').value;
+            if (notes.trim()) {
+                alert('Notes saved successfully!');
+                // In a real application, this would save to a database
+            } else {
+                alert('Please enter some notes before saving.');
+            }
+        }
+
+        function updateStats() {
+            const total = appointments.length;
+            const completed = appointments.filter(app => app.status === 'completed').length;
+            
+            document.getElementById('totalAppointments').textContent = total;
+            document.getElementById('completedTherapies').textContent = completed;
+        }
+
+        // Initialize the dashboard
+       
+    // Initialize the dashboard
+    document.addEventListener('DOMContentLoaded', function () {
+        renderAppointments();
+        renderNextAppointment();   // Next Appointment box ko render karega
+        updateStats();
+
+        // Set default date-time to current date and time
+        const now = new Date();
+        const dateTimeString = now.toISOString().slice(0, 16);
+        document.getElementById('appointmentDateTime').value = dateTimeString;
+    });
+
+    // Close modals when clicking outside
+    window.onclick = function (event) {
+        const modals = document.querySelectorAll('.modal');
+        modals.forEach(modal => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    }
+    </script>
+</body>
+</html>
