@@ -1,8 +1,8 @@
-# 🗓️ AyurSutra – Ayurvedic Hospital Scheduler
+# AyurSutra – Ayurvedic Hospital Scheduler
 
 A web-based frontend scheduling dashboard designed for Ayurvedic hospitals and Panchakarma clinics.
 
-## 🚀 Features
+##  Features
 - Schedule new patient appointments
 - Conflict detection for overlapping time slots
 - View upcoming & completed therapies
@@ -10,7 +10,7 @@ A web-based frontend scheduling dashboard designed for Ayurvedic hospitals and P
 - Panchakarma therapy categorization
 - Dynamic dashboard stats
 
-## 🛠️ Tech Stack
+##  Tech Stack
 - HTML5
 - CSS3
 - JavaScript
