@@ -11,8 +11,8 @@ A web-based frontend scheduling dashboard designed for Ayurvedic hospitals and P
 - Dynamic dashboard stats
 
 ##  Tech Stack
-- HTML5
-- CSS3
+- HTML
+- CSS
 - JavaScript
 
 ## 📸 Project Screenshots
