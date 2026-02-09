@@ -15,16 +15,16 @@ A web-based frontend scheduling dashboard designed for Ayurvedic hospitals and P
 - CSS3
 - JavaScript
 
-## Project screenshots
+## 📸 Project Screenshots
 
-### login page
-![schedular-app loginpage](./login.png).
+### Login Page
+![Login Page](login.png)
 
 ### Dashboard View
-![schedular-app Dashboard Section](./dashboard.png).
+![Dashboard](dashboard.png)
 
-### Patient details
-![schedular-app appointment](./appointment.png).
+### Schedule Appointment
+![Appointment](appointment.png)
 
 
 
